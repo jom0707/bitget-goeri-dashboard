@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>괴리율 실시간 모니터링 대시보드</title>
+    <meta name="description" content="비트겟 선물 시장의 실시간 괴리율 감지 및 백그라운드 웹 알림 시스템">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-container">
+        <!-- Header -->
+        <header>
+            <div class="logo-area">
+                <span class="pulse-dot" id="scanner-pulse"></span>
+                <h1>Goeri Alert</h1>
+                <span class="badge">PRO</span>
+            </div>
+            <p class="subtitle">실시간 비트겟 선물 괴리율 탐지기</p>
+        </header>
+
+        <!-- Status & Config Cards -->
+        <section class="grid-layout">
+            <!-- Connection Control Card -->
+            <div class="card glass-card shadow-sm" id="control-card">
+                <h2>🔌 백엔드 연결 설정</h2>
+                <div class="input-group">
+                    <label for="api-url">API 서버 주소 (Cloudflare Tunnel URL)</label>
+                    <input type="text" id="api-url" placeholder="https://your-api.domain.com 또는 http://localhost:8000" value="http://localhost:8000">
+                </div>
+                
+                <div class="button-row">
+                    <button id="btn-connect" class="btn btn-primary">서버 연결</button>
+                </div>
+            </div>
+
+            <!-- Web Push Control Card -->
+            <div class="card glass-card shadow-sm" id="push-card">
+                <h2>🔔 백그라운드 푸시 알림</h2>
+                <p class="card-desc">웹페이지 닫힘 상태에서도 시스템 알림을 수신합니다.</p>
+                <div class="push-status-area">
+                    <span>푸시 알림 상태:</span>
+                    <span id="push-status-text" class="status-badge status-disabled">미등록</span>
+                </div>
+                <div class="button-row">
+                    <button id="btn-push-toggle" class="btn btn-secondary" disabled>푸시 알림 활성화</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Status Summary -->
+        <section class="status-summary-bar glass-card">
+            <div class="status-item">
+                <span class="label">스캐너 상태</span>
+                <span class="value" id="status-scanner">대기 중</span>
+            </div>
+            <div class="status-item">
+                <span class="label">감시 심볼</span>
+                <span class="value" id="status-symbols">0개</span>
+            </div>
+            <div class="status-item">
+                <span class="label">마지막 스캔</span>
+                <span class="value" id="status-last-scan">-</span>
+            </div>
+            <div class="status-item">
+                <span class="label">누적 알림</span>
+                <span class="value" id="status-total-alerts">0건</span>
+            </div>
+        </section>
+
+        <!-- Live Alert Feed -->
+        <section class="alert-section">
+            <div class="section-header">
+                <h2>🚨 실시간 괴리율 알림 피드</h2>
+                <span class="refresh-indicator" id="feed-update-time">최신화 대기 중</span>
+            </div>
+            
+            <div class="alert-list" id="alert-list-container">
+                <div class="empty-state">
+                    <div class="empty-icon">📡</div>
+                    <p>API 서버 연결 후 모니터링이 활성화되면 실시간 알림이 수신됩니다.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Background Decoration -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
